@@ -1,0 +1,21 @@
+---
+- name: download and install the go language toolchain
+  become: true
+  block:
+    - name: remove existing installation
+      file:
+        path: /usr/local/go
+        state: absent
+    - name: create install directory
+      file:
+        path: /usr/local/go
+        state: directory
+    - name: fetch go 1.21 tarball
+      get_url:
+        url: https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
+        checksum: b3075ae1ce5dab85f89bc7905d1632de23ca196bd8336afd93fa97434cfa55ae
+      register: tarball
+    - name: extract tarball contents to install directory
+      unarchive:
+        src: "{{ tarball.dest }}"
+        dest: /usr/local/go
