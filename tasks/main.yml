@@ -6,10 +6,6 @@
       file:
         path: /usr/local/go
         state: absent
-    - name: create install directory
-      file:
-        path: /usr/local/go
-        state: directory
     - name: fetch go 1.21 tarball
       get_url:
         url: https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
@@ -19,4 +15,4 @@
     - name: extract tarball contents to install directory
       unarchive:
         src: "{{ tarball.dest }}"
-        dest: /usr/local/go
+        dest: /usr/local
